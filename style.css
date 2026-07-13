@@ -1487,3 +1487,322 @@ strong,
     transform: none;
   }
 }
+
+/* ==================== Budget Planner ==================== */
+.budget-planner {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.budget-planner-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: var(--text-primary);
+}
+
+.bp-reset-btn {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--card-border);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.bp-reset-btn:hover { color: var(--accent-blue); border-color: var(--accent-blue); }
+
+.bp-note {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.bp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed var(--timeline-line);
+}
+
+.bp-field-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.bp-field-head label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.bp-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+}
+.bp-tag.cash { background: rgba(13, 148, 136, 0.15); color: var(--accent-teal); }
+.bp-tag.card { background: rgba(var(--accent-blue-rgb), 0.15); color: var(--accent-blue); }
+
+.bp-suica-toggle {
+  display: inline-flex;
+  background: var(--bg-tertiary);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 3px;
+}
+.bp-suica-btn {
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.bp-suica-btn.active {
+  background: linear-gradient(135deg, var(--accent-blue), rgba(var(--accent-blue-rgb), 0.8));
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(var(--accent-blue-rgb), 0.3);
+}
+
+.bp-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.bp-cur {
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.bp-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.5rem 0.7rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: border-color 0.2s ease;
+}
+.bp-input:focus { outline: none; border-color: var(--accent-blue); }
+
+/* read-only auto-summed value (driven by the checklist) */
+.bp-value {
+  flex: 1;
+  min-width: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  padding: 0.35rem 0;
+}
+
+.bp-linked-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(13, 148, 136, 0.15);
+  color: var(--accent-teal);
+  white-space: nowrap;
+}
+
+.bp-ntd-note {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 0.25rem 0 0 0;
+  line-height: 1.5;
+}
+.bp-ntd-note strong { color: var(--accent-pink); }
+.bp-flow {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+  white-space: nowrap;
+}
+.bp-flow.to-cash { color: var(--accent-teal); }
+
+.bp-totals {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+.bp-total-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.9rem;
+  border-radius: 14px;
+  border: 1px solid var(--card-border);
+}
+.bp-total-card.cash { background: rgba(13, 148, 136, 0.1); border-color: rgba(13, 148, 136, 0.3); }
+.bp-total-card.card { background: rgba(var(--accent-blue-rgb), 0.1); border-color: rgba(var(--accent-blue-rgb), 0.3); }
+.bp-total-label { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); }
+.bp-total-value { font-size: 1.45rem; font-weight: 800; }
+.bp-total-card.cash .bp-total-value { color: var(--accent-teal); }
+.bp-total-card.card .bp-total-value { color: var(--accent-blue); }
+
+/* ==================== Itinerary Edit Mode ==================== */
+/* allow the injected edit / reset buttons to wrap instead of overflowing */
+.section-header { flex-wrap: wrap; }
+
+.day-edit-btn,
+.day-reset-btn {
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 1px solid var(--accent-blue);
+  background: var(--bg-secondary);
+  color: var(--accent-blue);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.day-edit-btn:hover { background: rgba(var(--accent-blue-rgb), 0.1); }
+.day-edit-btn.editing {
+  background: var(--accent-teal);
+  border-color: var(--accent-teal);
+  color: #fff;
+}
+.day-reset-btn {
+  border-color: var(--text-muted);
+  color: var(--text-secondary);
+}
+.day-reset-btn:hover { border-color: var(--accent-pink); color: var(--accent-pink); }
+
+/* Travel-time connector between locations */
+.timeline-travel {
+  position: relative;
+  margin: -0.3rem 0 0.9rem 0;
+  padding-left: 2.5rem;
+}
+.timeline-travel-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+  background: linear-gradient(135deg, rgba(var(--accent-blue-rgb), 0.08), rgba(13, 148, 136, 0.08));
+  border: 1px dashed rgba(var(--accent-blue-rgb), 0.4);
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+}
+
+/* Edit entry cards */
+.edit-entry {
+  background: var(--bg-secondary);
+  border: 1px solid var(--card-border);
+  border-left: 3px solid var(--accent-blue);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.edit-travel-entry { border-left-color: var(--accent-teal); }
+
+.edit-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+.edit-input {
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.9rem;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: inherit;
+}
+.edit-input:focus { outline: none; border-color: var(--accent-blue); }
+.edit-textarea { resize: vertical; line-height: 1.5; }
+
+.edit-cost-row {
+  display: flex;
+  gap: 0.5rem;
+}
+.edit-cost-row .edit-input:first-child { flex: 1; }
+.edit-cost-style { flex: 0 0 auto; width: auto; }
+
+.edit-rich-note {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  margin-top: 0.3rem;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+.edit-act-btn {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--card-border);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.edit-act-btn:hover:not(:disabled) { border-color: var(--accent-blue); color: var(--accent-blue); }
+.edit-act-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.edit-act-btn.danger:hover:not(:disabled) { border-color: var(--accent-pink); color: var(--accent-pink); }
+
+.edit-add-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+.edit-add-btn {
+  flex: 1;
+  min-width: 140px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 0.6rem 0.9rem;
+  border: 1.5px dashed var(--accent-blue);
+  background: rgba(var(--accent-blue-rgb), 0.06);
+  color: var(--accent-blue);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.edit-add-btn:hover { background: rgba(var(--accent-blue-rgb), 0.14); }
+
+@media (max-width: 768px) {
+  .bp-totals { grid-template-columns: 1fr; }
+  .bp-field-head { align-items: flex-start; }
+}
