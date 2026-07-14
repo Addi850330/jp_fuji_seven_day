@@ -10,7 +10,7 @@
   <link rel="manifest" href="manifest.webmanifest?v=20260714-1">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260714-1">
   <link rel="icon" href="favicon.ico?v=20260714" type="image/x-icon">
-  <link rel="stylesheet" href="style.css?v=rwd-20260714-15">
+  <link rel="stylesheet" href="style.css?v=rwd-20260714-16">
 </head>
 <body>
 
@@ -1582,7 +1582,7 @@
 
         <div class="summary-page">
           <section class="hero">
-            <img src="resources/fuji_bg.png" alt="富士山日出背景" class="hero-bg">
+            <img src="resources/fuji_hero.jpg" alt="富士山實景" class="hero-bg">
             <div class="hero-overlay"></div>
             <div class="hero-content">
               <span class="hero-tag">富士山登頂挑戰</span>
@@ -2620,6 +2620,103 @@
         header.appendChild(resetBtn);
         renderInto(day);
       });
+    })();
+
+    // ==================== Editable Prep Checklist ====================
+    (function () {
+      const panel = document.getElementById('panel-prep-list');
+      if (!panel) return;
+      const container = panel.querySelector('.checklist-container');
+      const header = panel.querySelector('.section-header');
+      if (!container || !header) return;
+      const KEY = 'fuji-prep-v1';
+
+      function mk(tag, cls, txt) {
+        const e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (txt != null) e.textContent = txt;
+        return e;
+      }
+
+      // Parse the pre-authored checklist into a model (must run before re-render)
+      function parseDefault() {
+        const cats = [];
+        container.querySelectorAll('.checklist-card').forEach(card => {
+          const titleEl = card.querySelector('.checklist-category-title');
+          const items = [];
+          card.querySelectorAll('.checklist-item').forEach(li => {
+            const cb = li.querySelector('input[type="checkbox"]');
+            const txtEl = li.querySelector('.checklist-label span:not(.checklist-custom-box)');
+            items.push({ text: txtEl ? txtEl.textContent.trim() : '', checked: cb ? cb.checked : false });
+          });
+          cats.push({ title: titleEl ? titleEl.textContent.trim() : '', items: items });
+        });
+        return cats;
+      }
+
+      const defaults = parseDefault();
+      let model;
+      try { const raw = localStorage.getItem(KEY); model = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(defaults)); }
+      catch (e) { model = JSON.parse(JSON.stringify(defaults)); }
+      let editing = false;
+      function save() { localStorage.setItem(KEY, JSON.stringify(model)); }
+
+      function render() {
+        container.innerHTML = '';
+        model.forEach((cat, ci) => {
+          const card = mk('div', 'checklist-card');
+          card.appendChild(mk('h4', 'checklist-category-title', cat.title));
+          const ul = mk('ul', 'checklist-list');
+          cat.items.forEach((it, ii) => {
+            const li = mk('li', 'checklist-item');
+            const id = 'prep-' + ci + '-' + ii;
+            const cb = mk('input', 'checklist-checkbox'); cb.type = 'checkbox'; cb.id = id; cb.checked = !!it.checked;
+            cb.addEventListener('change', () => { it.checked = cb.checked; save(); });
+            const label = mk('label', 'checklist-label'); label.setAttribute('for', id);
+            label.appendChild(mk('span', 'checklist-custom-box'));
+            label.appendChild(mk('span', null, it.text));
+            li.appendChild(cb); li.appendChild(label);
+            if (editing) {
+              const del = mk('button', 'prep-del-btn', '🗑️'); del.type = 'button'; del.title = '刪除';
+              del.addEventListener('click', () => { cat.items.splice(ii, 1); save(); render(); });
+              li.appendChild(del);
+            }
+            ul.appendChild(li);
+          });
+          card.appendChild(ul);
+          if (editing) {
+            const addRow = mk('div', 'prep-add-row');
+            const inp = mk('input', 'prep-add-input'); inp.type = 'text'; inp.placeholder = '新增項目…';
+            const addBtn = mk('button', 'prep-add-btn', '➕ 新增'); addBtn.type = 'button';
+            const doAdd = () => { const t = inp.value.trim(); if (t) { cat.items.push({ text: t, checked: false }); save(); render(); } };
+            addBtn.addEventListener('click', doAdd);
+            inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); doAdd(); } });
+            addRow.appendChild(inp); addRow.appendChild(addBtn);
+            card.appendChild(addRow);
+          }
+          container.appendChild(card);
+        });
+      }
+
+      const editBtn = mk('button', 'day-edit-btn', '✏️ 編輯清單'); editBtn.type = 'button';
+      const resetBtn = mk('button', 'day-reset-btn', '↺ 還原預設清單'); resetBtn.type = 'button';
+      resetBtn.style.display = 'none';
+      editBtn.addEventListener('click', () => {
+        editing = !editing;
+        editBtn.textContent = editing ? '✅ 完成' : '✏️ 編輯清單';
+        editBtn.classList.toggle('editing', editing);
+        resetBtn.style.display = editing ? '' : 'none';
+        render();
+      });
+      resetBtn.addEventListener('click', () => {
+        if (confirm('還原為預設裝備清單？你新增/刪除的項目與勾選狀態會被清除。')) {
+          model = JSON.parse(JSON.stringify(defaults));
+          save(); render();
+        }
+      });
+      header.appendChild(editBtn);
+      header.appendChild(resetBtn);
+      render();
     })();
   </script>
 

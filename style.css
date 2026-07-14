@@ -1817,6 +1817,52 @@ strong,
 .booking-k { font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); }
 .booking-v { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); overflow-wrap: anywhere; }
 
+/* Prep-checklist add/delete controls */
+.checklist-item { align-items: center; }
+.prep-del-btn {
+  margin-left: auto;
+  flex: 0 0 auto;
+  border: 1px solid var(--card-border);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-radius: var(--border-radius-sm);
+  padding: 0.2rem 0.5rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.prep-del-btn:hover { border-color: var(--accent-pink); color: var(--accent-pink); }
+.prep-add-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.prep-add-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+.prep-add-input:focus { outline: none; border-color: var(--accent-blue); }
+.prep-add-btn {
+  flex: 0 0 auto;
+  border: 1.5px dashed var(--accent-blue);
+  background: rgba(var(--accent-blue-rgb), 0.06);
+  color: var(--accent-blue);
+  border-radius: var(--border-radius-sm);
+  padding: 0.45rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.prep-add-btn:hover { background: rgba(var(--accent-blue-rgb), 0.14); }
+
 /* Left thumbnail on place cards */
 .timeline-card.with-thumb {
   display: flex;
