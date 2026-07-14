@@ -7,29 +7,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  /* Color Tokens - Light Mode */
-  --bg-primary: #f0f4f8;
+  /* Color Tokens - Light Mode (Notion-style warm grey) */
+  --bg-primary: #f7f6f3;
   --bg-secondary: #ffffff;
-  --bg-tertiary: #e1e7f0;
-  
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
-  --text-muted: #94a3b8;
-  
-  --accent-blue: #2563eb;
-  --accent-blue-rgb: 37, 99, 235;
-  --accent-orange: #f97316;
-  --accent-teal: #0d9488;
-  --accent-pink: #db2777;
-  
-  --card-bg: rgba(255, 255, 255, 0.7);
-  --card-border: rgba(255, 255, 255, 0.4);
-  --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
+  --bg-tertiary: #eceae4;
+
+  --text-primary: #37352f;
+  --text-secondary: #787774;
+  --text-muted: #9b9a97;
+
+  --accent-blue: #2383e2;        /* 主色：Notion 藍 */
+  --accent-blue-rgb: 35, 131, 226;
+  --accent-orange: #c2703d;      /* 搭配：暖橘 */
+  --accent-teal: #448361;        /* 現金：霧綠 */
+  --accent-pink: #9065b0;        /* 刷卡：霧紫 */
+
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --card-border: rgba(55, 53, 47, 0.09);
+  --card-shadow: 0 4px 16px 0 rgba(15, 15, 15, 0.06);
   --glass-blur: 12px;
-  
-  --timeline-line: #cbd5e1;
-  --badge-bg: #e2e8f0;
-  --badge-text: #334155;
+
+  --timeline-line: #e3e1dc;
+  --badge-bg: #eceae4;
+  --badge-text: #605d59;
   
   --font-family: 'Outfit', system-ui, -apple-system, sans-serif;
   --border-radius-sm: 8px;
@@ -41,27 +41,28 @@
 
 /* Dark Mode Overrides */
 [data-theme="dark"] {
-  --bg-primary: #0b111e;
-  --bg-secondary: #131b2e;
-  --bg-tertiary: #1e293b;
-  
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #64748b;
-  
-  --accent-blue: #38bdf8;
-  --accent-blue-rgb: 56, 189, 248;
-  --accent-orange: #ff7e5f;
-  --accent-teal: #2dd4bf;
-  --accent-pink: #f472b6;
-  
-  --card-bg: rgba(19, 27, 46, 0.7);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  
-  --timeline-line: #334155;
-  --badge-bg: #1e293b;
-  --badge-text: #cbd5e1;
+  /* Notion-style dark */
+  --bg-primary: #191919;
+  --bg-secondary: #252525;
+  --bg-tertiary: #2f2f2f;
+
+  --text-primary: #e6e5e2;
+  --text-secondary: #9b9a97;
+  --text-muted: #6f6f6c;
+
+  --accent-blue: #529cca;        /* 主色：Notion 藍 */
+  --accent-blue-rgb: 82, 156, 202;
+  --accent-orange: #d9915b;      /* 搭配：暖橘 */
+  --accent-teal: #529e72;        /* 現金：霧綠 */
+  --accent-pink: #9a6dd7;        /* 刷卡：霧紫 */
+
+  --card-bg: rgba(37, 37, 37, 0.72);
+  --card-border: rgba(255, 255, 255, 0.075);
+  --card-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.4);
+
+  --timeline-line: #373737;
+  --badge-bg: #2f2f2f;
+  --badge-text: #b3b3b0;
 }
 
 /* Reset and base styles */
@@ -77,7 +78,9 @@ html, body {
   color: var(--text-primary);
   line-height: 1.6;
   transition: background-color 0.3s ease, color 0.3s ease;
-  overflow-x: hidden;
+  /* clip (not hidden) prevents horizontal overflow without creating a scroll
+     container, so the desktop sticky sidebar keeps working */
+  overflow-x: clip;
 }
 
 body {
@@ -202,27 +205,18 @@ strong,
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .logo-icon {
-  background: linear-gradient(135deg, var(--accent-blue), var(--accent-orange));
-  color: #fff;
-  width: 42px;
-  height: 42px;
-  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
-  font-weight: 700;
-  box-shadow: 0 4px 15px rgba(var(--accent-blue-rgb), 0.3);
-  animation: logo-float 4s ease-in-out infinite alternate;
-}
-
-@keyframes logo-float {
-  0% { transform: translateY(0px) rotate(0deg); }
-  100% { transform: translateY(-4px) rotate(5deg); border-radius: 50% 50% 50% 50%; }
+  display: block;
+  width: 68px;
+  height: 46px;
+  flex: 0 0 auto;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  background: #fff;
 }
 
 .logo-text {
@@ -345,11 +339,11 @@ strong,
 
 .theme-switch-btn.active {
   color: #fff;
-  background: linear-gradient(135deg, #1e293b, #475569);
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-orange));
 }
 
 [data-theme="dark"] .theme-switch-btn.active {
-  background: linear-gradient(135deg, var(--accent-blue), #0369a1);
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-orange));
 }
 
 /* Summary Page */
@@ -670,7 +664,8 @@ strong,
 .timeline-dot {
   position: absolute;
   left: -2rem;
-  top: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
   width: 16px;
   height: 16px;
   border-radius: 50%;
@@ -684,7 +679,7 @@ strong,
 .timeline-item:hover .timeline-dot {
   background-color: var(--accent-orange);
   border-color: var(--accent-orange);
-  transform: scale(1.2);
+  transform: translateY(-50%) scale(1.2);
 }
 
 .timeline-card {
@@ -696,7 +691,7 @@ strong,
   border-radius: var(--border-radius-md);
   padding: 1.5rem;
   display: grid;
-  grid-template-columns: 100px 1fr auto;
+  grid-template-columns: max-content minmax(0, 1fr) auto;
   gap: 1.5rem;
   align-items: center;
   transition: var(--transition-bounce);
@@ -715,6 +710,7 @@ strong,
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  white-space: nowrap;
 }
 
 .timeline-body {
@@ -998,6 +994,9 @@ strong,
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  max-height: none;
+  overflow: visible;
+  position: static;
 }
 
 .expenses-details-header {
@@ -1009,20 +1008,7 @@ strong,
   justify-content: space-between;
   margin: 0;
   padding: 0 0 0.75rem;
-  position: sticky;
-  top: 0;
-  z-index: 5;
-}
-
-.expenses-details-header::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -1.5rem;
-  height: 1.5rem;
-  background: var(--bg-primary);
-  pointer-events: none;
+  position: static;
 }
 
 .expenses-details-actions {
@@ -1169,7 +1155,7 @@ strong,
   }
 
   .timeline-card {
-    grid-template-columns: 88px minmax(0, 1fr);
+    grid-template-columns: max-content minmax(0, 1fr);
   }
 
   .timeline-cost {
@@ -1358,11 +1344,6 @@ strong,
 
   .expenses-details-header {
     padding-bottom: 0.7rem;
-  }
-
-  .expenses-details-header::before {
-    top: -1rem;
-    height: 1rem;
   }
 
   .status-card {
@@ -1693,23 +1674,210 @@ strong,
 }
 .day-reset-btn:hover { border-color: var(--accent-pink); color: var(--accent-pink); }
 
-/* Travel-time connector between locations */
+/* Travel-time connector between locations — spans the full width of a timeline card */
 .timeline-travel {
   position: relative;
-  margin: -0.3rem 0 0.9rem 0;
-  padding-left: 2.5rem;
+  margin: 0 0 2rem 0; /* match .timeline-item so gaps above/below are even */
+}
+.timeline-travel:last-child {
+  margin-bottom: 0;
 }
 .timeline-travel-pill {
-  display: inline-flex;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
   align-items: center;
+  justify-content: center;
   gap: 0.35rem;
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--accent-blue);
   background: linear-gradient(135deg, rgba(var(--accent-blue-rgb), 0.08), rgba(13, 148, 136, 0.08));
   border: 1px dashed rgba(var(--accent-blue-rgb), 0.4);
+  border-radius: 12px;
+  padding: 0.45rem 0.85rem;
+  text-align: center;
+}
+
+/* Clickable place pills -> Google Maps place search */
+.map-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+.map-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+  text-decoration: none;
+  background: rgba(var(--accent-blue-rgb), 0.08);
+  border: 1px solid rgba(var(--accent-blue-rgb), 0.3);
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  transition: all 0.2s ease;
+}
+.map-link:hover {
+  background: rgba(var(--accent-blue-rgb), 0.16);
+  border-style: solid;
+  transform: translateY(-1px);
+}
+
+/* Booking-proof pill + popup modal */
+.booking-links { margin-top: 0.5rem; }
+.booking-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-orange));
+  border: none;
   border-radius: 999px;
   padding: 0.3rem 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(var(--accent-blue-rgb), 0.25);
+}
+.booking-pill:hover { transform: translateY(-1px); filter: brightness(1.05); }
+
+.booking-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.booking-modal.open { display: flex; }
+.booking-modal-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+}
+.booking-modal-box {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  padding: 1.5rem 1.5rem 1.75rem;
+}
+.booking-modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.booking-modal-close:hover { background: var(--accent-blue); color: #fff; }
+.booking-modal-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--accent-blue);
+  margin-bottom: 1rem;
+  padding-right: 2rem;
+}
+.booking-modal-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--card-border);
+}
+.booking-rows { display: flex; flex-direction: column; gap: 0.7rem; }
+.booking-row {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 0.6rem;
+  align-items: start;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px dashed var(--timeline-line);
+}
+.booking-row:last-child { border-bottom: none; padding-bottom: 0; }
+.booking-k { font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); }
+.booking-v { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); overflow-wrap: anywhere; }
+
+/* Left thumbnail on place cards */
+.timeline-card.with-thumb {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.timeline-content {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.timeline-thumb {
+  flex: 0 0 auto;
+  width: 104px;
+  height: 104px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.timeline-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.timeline-thumb.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  border: 1px dashed var(--card-border);
+  color: var(--text-muted);
+  font-size: 1.7rem;
+}
+@media (max-width: 768px) {
+  .timeline-card.with-thumb {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .timeline-content {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  .timeline-thumb {
+    width: 100%;
+    height: 160px;
+  }
+}
+
+/* Clickable route -> Google Maps */
+a.timeline-travel-link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+a.timeline-travel-link:hover {
+  background: linear-gradient(135deg, rgba(var(--accent-blue-rgb), 0.18), rgba(13, 148, 136, 0.18));
+  border-style: solid;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(var(--accent-blue-rgb), 0.18);
 }
 
 /* Edit entry cards */
