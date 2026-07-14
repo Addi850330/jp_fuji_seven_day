@@ -638,6 +638,7 @@ strong,
 
 /* Timeline Layout */
 .timeline-container {
+  --timeline-item-gap: 2rem;
   position: relative;
   padding-left: 2rem;
 }
@@ -654,7 +655,7 @@ strong,
 
 .timeline-item {
   position: relative;
-  margin-bottom: 2rem;
+  margin-bottom: var(--timeline-item-gap);
 }
 
 .timeline-item:last-child {
@@ -1457,8 +1458,8 @@ strong,
     gap: 0.85rem;
   }
 
-  .timeline-item {
-    margin-bottom: 1rem;
+  .timeline-container {
+    --timeline-item-gap: 1rem;
   }
 
   .timeline-card:hover,
@@ -1677,7 +1678,7 @@ strong,
 /* Travel-time connector between locations — spans the full width of a timeline card */
 .timeline-travel {
   position: relative;
-  margin: 0 0 2rem 0; /* match .timeline-item so gaps above/below are even */
+  margin: 0 0 var(--timeline-item-gap) 0;
 }
 .timeline-travel:last-child {
   margin-bottom: 0;
